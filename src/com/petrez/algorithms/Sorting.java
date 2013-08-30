@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public abstract class Sorting {
 
-    //Subclasses also can't create a instance of this class.
+    //Singleton
     private Sorting() {}
 
     /**
@@ -71,9 +71,9 @@ public abstract class Sorting {
      * a lot of duplicates keys.
      * @param array array for sorting.
      */
-    public static void quickSort(Comparable[] array, boolean isWithDuplicates) {
+    public static void quickSort(Comparable[] array, boolean isManyDuplicates) {
         shuffle(array);
-        if(isWithDuplicates)
+        if(isManyDuplicates)
             quickSortForDuplicates(array, 0, array.length - 1);
         else
             quickSort(array, 0, array.length - 1);
