@@ -2,15 +2,15 @@ package com.petrez.data.structures;
 
 import com.petrez.data.wrappers.Node;
 
-public interface SymbolTable<Key extends Comparable<Key>, Value> {
-    Value   min();
-    Value   max();
-    Value   get(Key key);
-    void    add(Key key, Value value);
-    void    add(Node<Key, Value> node);
-    void    add(Node<Key, Value>[] nodes);
+public interface SymbolTable<K extends Comparable<K>, V> {
+    V   min();
+    V   max();
+    V   get(K key);
+    void    add(K key, V value);
+    void    add(Node<K, V> node);
+    void    add(Node<K, V>[] nodes);
     void    deleteMin();
     void    deleteMax();
-    void    delete(Key key);
+    void    delete(K key);
     boolean isEmpty();
 }

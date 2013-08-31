@@ -3,8 +3,8 @@ package com.petrez.data.structures;
 
 import com.petrez.data.wrappers.Node;
 
-public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements SymbolTable<Key, Value> {
-    private Node<Key, Value> treeRoot;
+public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<K, V> {
+    private Node<K, V> treeRoot;
 
     public  TreeSymbolTable() {
         this.treeRoot = null;
@@ -15,34 +15,34 @@ public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements Symb
     }
 
     @Override
-    public  Value  min() {
+    public  V  min() {
         return min(treeRoot).getValue();
     }
 
-    private Node<Key, Value> min(Node<Key, Value> root) {
+    private Node<K, V> min(Node<K, V> root) {
         if(root.getLeft() == null) return root;
         return min(root.getLeft());
     }
 
     @Override
-    public  Value  max() {
+    public  V  max() {
         return max(treeRoot).getValue();
     }
 
-    private Node<Key, Value> max(Node<Key, Value> root) {
+    private Node<K, V> max(Node<K, V> root) {
         if(root.getRight() == null) return root;
         return max(root.getRight());
     }
 
     @Override
-    public  Value  get(Key key) {
+    public  V  get(K key) {
         if(key == null)
             throw new NullPointerException("Key can't be NULL");
 
         return get(treeRoot, key);
     }
 
-    private Value  get(Node<Key, Value> root, Key key) {
+    private V  get(Node<K, V> root, K key) {
         if(root == null) return null;
 
         int comparing = root.KEY.compareTo(key);
@@ -54,22 +54,22 @@ public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements Symb
     }
 
     @Override
-    public  void   add(Key key, Value value) {
+    public  void   add(K key, V value) {
         treeRoot = add(treeRoot, key, value);
     }
 
     @Override
-    public  void   add(Node<Key, Value> node) {
+    public  void   add(Node<K, V> node) {
         treeRoot = add(treeRoot, node.KEY, node.getValue());
     }
 
     @Override
-    public  void   add(Node<Key, Value>[] nodes) {
-        for(Node<Key, Value> node: nodes)
+    public  void   add(Node<K, V>[] nodes) {
+        for(Node<K, V> node: nodes)
             treeRoot = add(treeRoot, node.KEY, node.getValue());
     }
 
-    private Node   add(Node root, Key key, Value value) {
+    private Node   add(Node root, K key, V value) {
         if(key == null || value == null)
             throw new NullPointerException("Key or value can't be NULL");
         if(root == null) return new Node(key, value);
@@ -88,7 +88,7 @@ public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements Symb
         treeRoot = deleteMin(treeRoot);
     }
 
-    private Node   deleteMin(Node<Key, Value> root) {
+    private Node   deleteMin(Node<K, V> root) {
         if(root == null)
             throw new NullPointerException("Root node can't be NULL");
 
@@ -102,7 +102,7 @@ public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements Symb
         treeRoot = deleteMax(treeRoot);
     }
 
-    private Node   deleteMax(Node<Key, Value> root) {
+    private Node   deleteMax(Node<K, V> root) {
         if(root == null)
             throw new NullPointerException("Root node can't be NULL");
 
@@ -112,11 +112,11 @@ public class TreeSymbolTable<Key extends Comparable<Key>, Value> implements Symb
     }
 
     @Override
-    public  void   delete(Key key) {
+    public  void   delete(K key) {
         treeRoot = delete(treeRoot, key);
     }
 
-    private Node   delete(Node root, Key key) {
+    private Node   delete(Node root, K key) {
         if(root == key)
             throw new NullPointerException("Key can't be NULL");
 
