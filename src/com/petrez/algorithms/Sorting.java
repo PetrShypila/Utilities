@@ -18,8 +18,9 @@ public abstract class Sorting {
             int min = i;
 
             for(int j = i + 1; j < array.length; j++) {
-                if(array[j].compareTo(array[min]) < 0)
+                if(array[j].compareTo(array[min]) < 0) {
                     min = j;
+                }
                 exchange(array, i, min);
             }
         }
@@ -31,9 +32,11 @@ public abstract class Sorting {
      * @param array array for sorting.
      */
     public static void insertionSort(Comparable[] array) {
-        for(int i = 1; i < array.length; i++)
-            for(int j = i; j > 0 && array[j].compareTo(array[j-1]) < 0; j--)
+        for(int i = 1; i < array.length; i++) {
+            for (int j = i; j > 0 && array[j].compareTo(array[j - 1]) < 0; j--) {
                 exchange(array, j, j - 1);
+            }
+        }
     }
 
     /**
@@ -43,13 +46,16 @@ public abstract class Sorting {
     public static void shellSort(Comparable[] array) {
         int h = 1;
 
-        while(h < array.length / 3)
+        while(h < array.length / 3) {
             h = h * 3 + 1; //1, 4, 13 and so on.
+        }
 
         while(h > 0) {
-            for(int i = h; i < array.length; i++)
-                for(int j = i; j >= h && array[j].compareTo(array[j-1]) < 0; j-=h)
-                    exchange(array, j, j-h);
+            for(int i = h; i < array.length; i++) {
+                for (int j = i; j >= h && array[j].compareTo(array[j - 1]) < 0; j -= h) {
+                    exchange(array, j, j - h);
+                }
+            }
             h = h/3;
         }
     }
@@ -61,9 +67,11 @@ public abstract class Sorting {
     public static void mergeSort(Comparable[] array) {
         Comparable[] tempArray = new Comparable[array.length];
 
-        for(int size = 1; size < tempArray.length; size = size + size)
-            for(int low = 0; low < tempArray.length - size; low += size + size)
+        for(int size = 1; size < tempArray.length; size = size + size) {
+            for(int low = 0; low < tempArray.length - size; low += size + size) {
                 merge(array, low, low + size - 1, Math.min(low + size + size - 1, array.length - 1));
+            }
+        }
     }
 
     /**
@@ -73,11 +81,11 @@ public abstract class Sorting {
      */
     public static void quickSort(Comparable[] array, boolean isManyDuplicates) {
         shuffle(array);
-        if(isManyDuplicates)
+        if(isManyDuplicates) {
             quickSortForDuplicates(array, 0, array.length - 1);
-        else
+        } else {
             quickSort(array, 0, array.length - 1);
-
+        }
     }
 
     /**
@@ -98,14 +106,19 @@ public abstract class Sorting {
         Comparable[] tempArray = new Comparable[array.length];
         int i = low;
         int j = middle + 1;
-        for(int q = low; q <= high; q++)
-            tempArray[q] = array[q];
-
         for(int q = low; q <= high; q++) {
-            if     (i > middle)                               array[q] = tempArray[j++];
-            else if(j > high)                                 array[q] = tempArray[i++];
-            else if(tempArray[j].compareTo(tempArray[i]) < 0) array[q] = tempArray[j++];
-            else                                              array[q] = tempArray[i++];
+            tempArray[q] = array[q];
+        }
+        for(int q = low; q <= high; q++) {
+            if (i > middle) {
+                array[q] = tempArray[j++];
+            } else if(j > high) {
+                array[q] = tempArray[i++];
+            } else if(tempArray[j].compareTo(tempArray[i]) < 0) {
+                array[q] = tempArray[j++];
+            } else {
+                array[q] = tempArray[i++];
+            }
         }
     }
 
@@ -115,10 +128,16 @@ public abstract class Sorting {
         Comparable element = array[low];
 
         while(true) {
-            while(array[++i].compareTo(element) < 0) if(i == high) break;
-            while(element.compareTo(array[--j]) < 0) if(j == low)  break;
+            while(array[++i].compareTo(element) < 0) {
+                if(i == high) break;
+            }
+            while(element.compareTo(array[--j]) < 0) {
+                if(j == low)  break;
+            }
 
-            if(i >= j) break;
+            if(i >= j) {
+                break;
+            }
             exchange(array, i, j);
         }
 
@@ -127,7 +146,9 @@ public abstract class Sorting {
     }
 
     private static void quickSort(Comparable[] array, int low, int high) {
-        if(high <= low) return;
+        if(high <= low) {
+            return;
+        }
         int j = partition(array, low, high);
         quickSort(array, low, j - 1);
         quickSort(array, j + 1, high);
@@ -141,7 +162,9 @@ public abstract class Sorting {
      * @param high Higher array index.
      */
     private static void quickSortForDuplicates(Comparable[] array, int low, int high) {
-        if(high <= low) return;
+        if(high <= low) {
+            return;
+        }
         int lt = low;
         int i  = low + 1;
         int gt = high;
@@ -151,9 +174,14 @@ public abstract class Sorting {
         while(i <= gt) {
             int comparing = array[i].compareTo(element);
 
-            if      (comparing < 0) exchange(array, lt++, i++);
-            else if (comparing > 0) exchange(array, i, gt--);
-            else                    i++;
+            if(comparing < 0) {
+                exchange(array, lt++, i++);
+            } else if (comparing > 0){
+                exchange(array, i, gt--);
+            }
+            else {
+                i++;
+            }
         }
 
         quickSortForDuplicates(array, low, lt - 1);

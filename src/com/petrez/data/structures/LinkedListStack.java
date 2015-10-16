@@ -23,7 +23,7 @@ public class LinkedListStack<T> implements Stack<T>, Iterable<T> {
     /**
      * Objects counter in a stack.
      */
-    private int        itemsCounter;
+    private int itemsCounter;
 
     /**
      * Create empty stack.
@@ -40,8 +40,9 @@ public class LinkedListStack<T> implements Stack<T>, Iterable<T> {
 
     @Override
     public T pop() {
-        if(isEmpty())
+        if(isEmpty()) {
             throw new NoSuchElementException("Stack is empty");
+        }
         T item = firstInStack.getItem();
         firstInStack = firstInStack.getNext();
         itemsCounter--;
@@ -51,7 +52,7 @@ public class LinkedListStack<T> implements Stack<T>, Iterable<T> {
     @Override
     public void push(T item) {
         Element oldFirst = firstInStack;
-        firstInStack     = new ElementImplementation<T>(item);
+        firstInStack = new ElementImplementation<T>(item);
         firstInStack.setNext(oldFirst);
         itemsCounter++;
     }
@@ -87,8 +88,9 @@ public class LinkedListStack<T> implements Stack<T>, Iterable<T> {
 
         @Override
         public T next() {
-            if(!hasNext())
+            if(!hasNext()) {
                 throw new NoSuchElementException();
+            }
             T item = currentInStack.getItem();
             currentInStack = currentInStack.getNext();
             return item;

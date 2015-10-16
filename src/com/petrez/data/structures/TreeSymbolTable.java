@@ -36,19 +36,24 @@ public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<
 
     @Override
     public  V  get(K key) {
-        if(key == null)
+        if(key == null) {
             throw new NullPointerException("Key can't be NULL");
-
+        }
         return get(treeRoot, key);
     }
 
     private V  get(Node<K, V> root, K key) {
-        if(root == null) return null;
+        if(root == null) {
+            return null;
+        }
 
         int comparing = root.KEY.compareTo(key);
 
-        if     (comparing > 0) return get(root.getLeft(), key);
-        else if(comparing < 0) return get(root.getRight(), key);
+        if (comparing > 0) {
+            return (V) get(root.getLeft(), key);
+        } else if(comparing < 0) {
+            return (V) get(root.getRight(), key);
+        }
 
         return root.getValue();
     }
@@ -65,20 +70,29 @@ public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<
 
     @Override
     public  void   add(Node<K, V>[] nodes) {
-        for(Node<K, V> node: nodes)
+        for(Node<K, V> node: nodes) {
             treeRoot = add(treeRoot, node.KEY, node.getValue());
+        }
     }
 
     private Node   add(Node root, K key, V value) {
-        if(key == null || value == null)
+        if(key == null || value == null) {
             throw new NullPointerException("Key or value can't be NULL");
-        if(root == null) return new Node(key, value);
+        }
+
+        if(root == null) {
+            return new Node(key, value);
+        }
 
         int comparing = root.KEY.compareTo(key);
 
-        if     (comparing > 0) root.setLeft (add(root.getLeft(),  key, value));
-        else if(comparing < 0) root.setRight(add(root.getRight(), key, value));
-        else                   root.setValue(value);
+        if (comparing > 0) {
+            root.setLeft (add(root.getLeft(),  key, value));
+        } else if(comparing < 0) {
+            root.setRight(add(root.getRight(), key, value));
+        } else {
+            root.setValue(value);
+        }
 
         return root;
     }
@@ -89,10 +103,13 @@ public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<
     }
 
     private Node   deleteMin(Node<K, V> root) {
-        if(root == null)
+        if(root == null) {
             throw new NullPointerException("Root node can't be NULL");
+        }
 
-        if(root.getLeft() == null) return root.getRight();
+        if(root.getLeft() == null) {
+            return root.getRight();
+        }
         root.setLeft(deleteMin(root.getLeft()));
         return root;
     }
@@ -103,10 +120,13 @@ public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<
     }
 
     private Node   deleteMax(Node<K, V> root) {
-        if(root == null)
+        if(root == null) {
             throw new NullPointerException("Root node can't be NULL");
+        }
 
-        if(root.getRight() == null) return root.getRight();
+        if(root.getRight() == null) {
+            return root.getRight();
+        }
         root.setRight(deleteMax(root.getRight()));
         return root;
     }
@@ -117,16 +137,24 @@ public class TreeSymbolTable<K extends Comparable<K>, V> implements SymbolTable<
     }
 
     private Node   delete(Node root, K key) {
-        if(root == key)
+        if(root == key) {
             throw new NullPointerException("Key can't be NULL");
+        }
 
         int comparing = root.KEY.compareTo(key);
 
-        if(comparing > 0)      root.setLeft(delete(root.getLeft(), key));
-        else if(comparing < 0) root.setRight(delete(root.getRight(), key));
+        if(comparing > 0) {
+            root.setLeft(delete(root.getLeft(), key));
+        } else if(comparing < 0) {
+            root.setRight(delete(root.getRight(), key));
+        }
         else {
-            if(root.getRight() == null) return root.getLeft();
-            if(root.getLeft()  == null) return root.getRight();
+            if(root.getRight() == null) {
+                return root.getLeft();
+            }
+            if(root.getLeft()  == null) {
+                return root.getRight();
+            }
 
             Node temp = root;
 

@@ -15,8 +15,9 @@ public class Node<K extends Comparable<K>, V> {
     private      Node right;
 
     public Node(K key, V value) {
-        if(key == null || value == null)
+        if(key == null || value == null) {
             throw new NullPointerException("Key or value can't be NULL");
+        }
         this.KEY   = key;
         this.value = value;
         this.left  = null;

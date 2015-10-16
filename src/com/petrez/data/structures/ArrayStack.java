@@ -28,15 +28,17 @@ public class ArrayStack<T> implements Stack<T>, Iterable<T> {
      */
     @Override
     public T pop() {
-        if(isEmpty())
+        if(isEmpty()) {
             throw new NoSuchElementException();
+        }
 
         T item = objectsArray[objectsCounter - 1];
         objectsArray[objectsCounter - 1] = null;
         objectsCounter--;
 
-        if(objectsArray.length / 4 > objectsCounter)
+        if(objectsArray.length / 4 > objectsCounter) {
             objectsArray = Arrays.copyOf(objectsArray, objectsArray.length / 2);
+        }
 
         return item;
     }
@@ -47,16 +49,19 @@ public class ArrayStack<T> implements Stack<T>, Iterable<T> {
      */
     @Override
     public void push(T item) {
-        if(objectsCounter >= MAX_ARRAY_SIZE)
+        if(objectsCounter >= MAX_ARRAY_SIZE) {
             throw new ArrayIndexOutOfBoundsException();
+        }
         objectsArray[objectsCounter] = item;
         objectsCounter++;
 
-        if(objectsArray.length == objectsCounter)
-            if(objectsArray.length * 2 < MAX_ARRAY_SIZE)
+        if(objectsArray.length == objectsCounter) {
+            if (objectsArray.length * 2 < MAX_ARRAY_SIZE) {
                 objectsArray = Arrays.copyOf(objectsArray, objectsArray.length * 2);
-            else
+            } else {
                 objectsArray = Arrays.copyOf(objectsArray, MAX_ARRAY_SIZE);
+            }
+        }
     }
 
     /**
