@@ -21,8 +21,8 @@ public abstract class Sorting {
                 if(array[j].compareTo(array[min]) < 0) {
                     min = j;
                 }
-                exchange(array, i, min);
             }
+            exchange(array, i, min);
         }
     }
 
